@@ -1,0 +1,73 @@
+<%- include("partials/header.ejs") %> 
+<%- include("partials/nav.ejs") %> 
+
+
+<div class="contact_main">
+    <!--touch_section start -->
+
+    <div class="touch_section">
+        <div class="container">
+            <h1 class="touch_text">Sign up</h1>
+        </div>
+    </div>
+
+    <div class="lets_touch_main">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="input_main">
+                        <div class="container">
+                            <form action="/auth/signup" method="post">
+                                <div class="form-group">
+                                    <%- include("partials/display-error.ejs") %>
+                                </div>
+                                <div class="form-group">
+                                    <%- include("partials/display-success.ejs") %> 
+                                </div>
+                                <div class="form-group">
+                                    <% if (formData !== undefined && formData.length > 0 && formData[0].username.trim().length > 0) { %>
+                                        <input type="text" class="email-bt" placeholder="Username..." name="username" value="<%= formData[0].username %>">
+                                    <% } else { %>
+                                        <input type="text" class="email-bt" placeholder="Username..." name="username">
+                                    <% } %>
+                                </div>
+                                <div class="form-group">
+                                    <% if (formData !== undefined && formData.length > 0 && formData[0].email.trim().length > 0) { %>
+                                        <input type="email" class="email-bt" placeholder="E-mail..." name="email" value="<%= formData[0].email %>">
+                                    <% } else { %>
+                                        <input type="email" class="email-bt" placeholder="E-mail..." name="email">
+                                    <% } %>
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" class="email-bt" placeholder="Password..." name="password">
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" class="email-bt" placeholder="Repeat Password..." name="re_password">
+                                </div>
+                                <div class="form-group">
+                                    <button  type="submit" class="main_bt">sign up</button>
+                                </div>
+                                <input type="hidden" name="_csrf" value="<%= token %>">               
+                            </form>
+                        </div>
+                    </div>
+                    <div>
+                        Already a member? Please, <a class="" href="/login">Log in</a>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-12">
+                            <p class="lorem_text">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--touch_section end -->
+
+
+<%- include("partials/footer.ejs") %>

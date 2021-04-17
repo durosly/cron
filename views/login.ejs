@@ -1,0 +1,52 @@
+<%- include("partials/header.ejs") %> 
+<%- include("partials/nav.ejs") %> 
+
+
+<div class="contact_main">
+    <!--touch_section start -->
+
+    <div class="touch_section">
+        <div class="container">
+            <h1 class="touch_text">Login</h1>
+        </div>
+    </div>
+
+    <div class="lets_touch_main">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="input_main">
+                       <div class="container">
+                          <form action="/action_page.php" method="post">
+                            <div class="form-group">
+                              <input type="text" class="email-bt" placeholder="Username / E-mail" name="uid">
+                            </div>
+                            <div class="form-group">
+                              <input type="password" class="email-bt" placeholder="Password" name="password">
+                            </div>
+                          </form>
+                       </div> 
+                       <div class="send_btn">
+                        <button  type="button" class="main_bt"><a href="#">Log in</a></button>
+                       </div>                   
+                    </div>
+                    <div>
+                        Are you new? Please, <a class="" href="/signup">Sign up</a>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-12">
+                            <p class="lorem_text">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--touch_section end -->
+
+
+<%- include("partials/footer.ejs") %>

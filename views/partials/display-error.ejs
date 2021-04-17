@@ -1,0 +1,7 @@
+<% if (formErrors) { %>
+    <% formErrors.forEach(error => { %>
+        <div id="error" class="alert alert-danger">
+            <%= error %> 
+        </div>
+    <% }) %>
+<% } %>

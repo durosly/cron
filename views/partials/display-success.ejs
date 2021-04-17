@@ -1,0 +1,7 @@
+<% if (formSuccess) { %>
+    <% formSuccess.forEach(msg => { %>
+        <div id="success" class="alert alert-success">
+            <%= msg %> 
+        </div>
+    <% }) %>
+<% } %>

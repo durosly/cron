@@ -1,0 +1,38 @@
+<form action="/contact" method="post">
+    <div class="form-group">
+        <%- include("display-error.ejs") %>
+    </div>
+    <div class="form-group">
+        <%- include("display-success.ejs") %> 
+    </div>
+    <div class="form-group">
+        <% if (formData !== undefined && formData.length > 0 && formData[0].name.length > 0) { %>
+            <input type="text" class="email-bt" placeholder="Name" name="name" value="<%= formData[0].name %>" >
+        <% } else { %>
+            <input type="text" class="email-bt" placeholder="Name" name="name" >
+        <% } %> 
+    </div>
+    <div class="form-group">
+        <% if (formData !== undefined && formData.length > 0 && formData[0].email.length > 0) { %>
+            <input type="text" class="email-bt" placeholder="Email" name="email" value="<%= formData[0].email %>" >
+        <% } else { %>
+            <input type="text" class="email-bt" placeholder="Email" name="email">
+        <% } %>
+    </div>
+    <div class="form-group">
+        <% if (formData !== undefined && formData.length > 0 && formData[0].msg.trim().length > 0) { %>
+            <textarea class="massage-bt" placeholder="Message" rows="5" id="comment" name="msg"><%= formData[0].msg.trim() %></textarea>
+        <% } else { %>
+            <textarea class="massage-bt" placeholder="Message" rows="5" id="comment" name="msg"></textarea>
+        <% } %> 
+    </div>
+    <% if (route) { %>
+        <input type="hidden" name="_route" value="<%= route %>">
+    <% } %>
+    <% if (token) { %>
+        <input type="hidden" name="_csrf" value="<%= token %>">
+    <% } %>
+    <div class="send_btn">
+        <button  type="submit" class="main_bt">Send</button>
+    </div>                   
+</form>
