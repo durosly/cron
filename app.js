@@ -2,7 +2,9 @@ const express = require("express")
 const session = require('express-session')
 const { flash } = require('express-flash-message')
 const csurf = require('csurf')
+const mysql = require("mysql-await")
 
+const config = require("./config/config")
 const contact = require("./routes/contact")
 const user = require("./routes/user")
 
@@ -34,6 +36,19 @@ app.use(express.urlencoded({extended: true}))
 
 //add csrf (cross site request forgery)
 app.use(csurf())
+
+//test connection
+const pool = mysql.createPool(config.database)
+const testConnection = async () => {
+    try {
+        const connection = await pool.awaitGetConnection()
+        connection.release()
+    } catch(error) {
+        console.log("An error occured trying to connect to database from app handler")
+    }
+}
+testConnection()
+//end test
 
 app.get("/", async (req, res) => {
     try {

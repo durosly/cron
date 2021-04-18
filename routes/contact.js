@@ -6,6 +6,7 @@ const config = require("../config/config")
 
 
 const router = express.Router()
+const pool = mysql.createPool(config.database)
 
 const schema = Joi.object({
     name: Joi.string().min(3).max(99).regex(/[a-zA-Z][a-zA-Z ]+[a-zA-Z]$/).required().messages({
@@ -18,18 +19,6 @@ const schema = Joi.object({
     }),
     _csrf: Joi.string().required().label("token")
 })
-
-const pool = mysql.createPool(config.database)
-//test connection
-const testConnection = async () => {
-    try {
-        const connection = await pool.awaitGetConnection()
-        connection.release()
-    } catch(error) {
-        console.log("An error occured trying to connect to database")
-    }
-}
-testConnection()
 
 router.get("/", async (req, res) => {
     try {
