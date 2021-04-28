@@ -1,6 +1,7 @@
 const express = require("express")
 const Joi = require("joi")
 const mysql = require("mysql-await")
+const bcrypt = require("bcryptjs")
 
 const config = require("../config/config")
 
@@ -20,8 +21,20 @@ const signupSchema = Joi.object({
     _csrf: Joi.string().required().label("token")
 })
 
-router.get("/login", (req, res) => {
-    res.render("login")
+router.get("/login", async (req, res) => {
+    try {
+        const formErrors = await req.consumeFlash("form-error")
+        const formData = await req.consumeFlash("form-data")
+        const formSuccess = await req.consumeFlash("form-success")
+        res.render("login", {formErrors, formData, formSuccess, token: req.csrfToken()})
+    } catch(error) {
+        console.log(error)
+        res.status(500).send("An error occured")
+    }
+})
+//implement login
+router.post("/login", (req, res) => {
+    
 })
 
 router.get("/signup", async (req, res) => {
@@ -40,7 +53,12 @@ router.post("/signup", async (req, res) => {
     try {
         const validate = await signupSchema.validateAsync(req.body)
         const sql = "INSERT INTO users (username, email, password) VALUES (?, ?, ?);"
+        const salt = await bcrypt.genSalt(10)
         const data = Object.values(validate)//extract values into an array
+        data[2] = await bcrypt.hash(data[2], salt)
+        console.log(data)
+        //const hash = bcrypt.hash()
+        //todo ==> hash password before saving to database
         const result = await pool.awaitQuery(sql, data)
         if(result.affectedRows > 0) {
             await req.flash('form-success', "Sign up successful. You can now log in.")
@@ -51,6 +69,7 @@ router.post("/signup", async (req, res) => {
         }
     } catch(error) {
         try {
+            console.log(error.details)
             await req.flash('form-error', error.details[0].message)
             await req.flash('form-data', error._original)
             res.redirect(route)
