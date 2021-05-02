@@ -474,6 +474,7 @@ button.main_bt {
     height: 50px;
     border-radius: 5px;
     font-size: 22px;
+    cursor: pointer;
 }
 
 .email-bt{

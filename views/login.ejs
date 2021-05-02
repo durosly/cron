@@ -17,7 +17,7 @@
                 <div class="col-md-6">
                     <div class="input_main">
                        <div class="container">
-                          <form action="/action_page.php" method="post">
+                          <form action="/auth/login" method="post">
                             <div class="form-group">
                                 <%- include("partials/display-error.ejs") %>
                             </div>
@@ -31,8 +31,9 @@
                                 <input type="password" class="email-bt" placeholder="Password" name="password">
                             </div>
                             <div class="send_btn">
-                                <button  type="button" class="main_bt">Log in</button>
-                            </div>                   
+                                <button  type="submit" value="submit" class="main_bt">Log in</button>
+                            </div> 
+                            <input type="hidden" name="_csrf" value="<%= token %>">                 
                           </form>
                        </div> 
                     </div>

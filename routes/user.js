@@ -21,6 +21,12 @@ const signupSchema = Joi.object({
     _csrf: Joi.string().required().label("token")
 })
 
+const loginSchema = Joi.object({
+    uid: Joi.string().trim().required(),
+    password: Joi.string().required(),
+    _csrf: Joi.string().required().label("token")
+})
+
 router.get("/login", async (req, res) => {
     try {
         const formErrors = await req.consumeFlash("form-error")
@@ -33,8 +39,21 @@ router.get("/login", async (req, res) => {
     }
 })
 //implement login
-router.post("/login", (req, res) => {
-    
+router.post("/login", async (req, res) => {
+    try {
+
+        const validate = await loginSchema.validateAsync(req.body)
+        const sql = "SELECT * FROM users WHERE username = ? OR email = ? LIMIT 1";
+        //console.log(validate)
+        const result = await pool.awaitQuery(sql, [validate.uid, validate.uid])
+        if(result.affectedRows > 0) {
+            console.log(result)
+        }
+        res.send("hello world")
+    } catch(error) {
+        console.log("error", error)
+        res.send("an error occured")
+    }
 })
 
 router.get("/signup", async (req, res) => {
