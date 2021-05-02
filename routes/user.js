@@ -56,9 +56,6 @@ router.post("/signup", async (req, res) => {
         const salt = await bcrypt.genSalt(10)
         const data = Object.values(validate)//extract values into an array
         data[2] = await bcrypt.hash(data[2], salt)
-        console.log(data)
-        //const hash = bcrypt.hash()
-        //todo ==> hash password before saving to database
         const result = await pool.awaitQuery(sql, data)
         if(result.affectedRows > 0) {
             await req.flash('form-success', "Sign up successful. You can now log in.")
@@ -69,9 +66,12 @@ router.post("/signup", async (req, res) => {
         }
     } catch(error) {
         try {
-            console.log(error.details)
-            await req.flash('form-error', error.details[0].message)
-            await req.flash('form-data', error._original)
+            if(error.details) {
+                await req.flash('form-error', error.details[0].message)
+                await req.flash('form-data', error._original)
+            } else {
+                await req.flash("form-error", "Something went wrong.")
+            }
             res.redirect(route)
         } catch (err) {
             console.log(err)
